@@ -9,6 +9,7 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        role = request.form.get('role', 'customer') # Default to customer
         
         # Check if user exists
         existing_user = User.get_by_username(username)
@@ -17,7 +18,7 @@ def register():
             return redirect(url_for('auth.register'))
             
         hashed_password = generate_password_hash(password)
-        User.create(username, hashed_password)
+        User.create(username, hashed_password, role)
         
         flash('Registration successful! Please log in.', 'success')
         return redirect(url_for('auth.login'))

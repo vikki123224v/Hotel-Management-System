@@ -146,34 +146,38 @@ body {
 
 /* Form Classes */
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     display: flex;
     flex-direction: column;
 }
 
 .form-group label {
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
     color: var(--text-muted);
 }
 
 input,
-select {
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
+select,
+.form-select {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
     border: 1px solid var(--border);
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: 'Inter', sans-serif;
-    outline: none;
-    background: #fff;
+    font-size: 1rem;
+    background-color: #F9FAFB;
+    transition: all 0.2s ease;
+    width: 100%;
 }
 
 input:focus,
 select:focus {
+    outline: none;
     border-color: var(--primary);
+    background-color: white;
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
+
 
 .auth-form input {
     width: 100%;

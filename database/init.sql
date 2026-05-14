@@ -30,9 +30,11 @@ CREATE TABLE IF NOT EXISTS bookings (
     FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
 );
 
--- Insert dummy users with password 'admin' and 'customer' (hashed with basic sha256 for Werkzeug, but for demo we can generate basic ones or leave them without for now)
--- You will need to create users through the app to get proper password hashes.
--- For now, let's insert dummy rooms.
+-- Insert default admin user (Password: admin123)
+INSERT IGNORE INTO users (username, password_hash, role) VALUES 
+('admin', 'scrypt:32768:8:1$PbOBbtwaSDe3y0xM$df18e873130d216503c80ff550a1d6360c70428d02954848d538f73fe320fb4361a80b5bdcf3353f08e', 'admin');
+
+-- Insert dummy rooms.
 INSERT IGNORE INTO rooms (room_number, type, price, status) VALUES 
 ('101', 'Single', 100.00, 'available'),
 ('102', 'Double', 150.00, 'available'),
