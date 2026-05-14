@@ -9,6 +9,7 @@ class Config:
     MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
     MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', '')
     MYSQL_DB = os.environ.get('MYSQL_DB', 'hotel_db')
-    MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3307))
-    # Use python dicts mapped to rows instead of tuples
+    MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
     MYSQL_CURSORCLASS = 'DictCursor'
+    # Required for some cloud providers like Aiven
+    MYSQL_CUSTOM_OPTIONS = {"ssl": {"ca": "/etc/ssl/certs/ca-certificates.crt"}} if os.environ.get('RENDER') else {}
