@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: cloudnest-hms
+    runtime: docker
+    plan: free
+    envVars:
+      - key: MYSQL_HOST
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DB
+        sync: false
+      - key: MYSQL_PORT
+        value: 3306
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: 0
