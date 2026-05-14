@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST:-db}
+      - MYSQL_USER=${MYSQL_USER:-hotel_user}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-hotel_pass}
+      - MYSQL_DB=${MYSQL_DB:-hotel_db}
+      - SECRET_KEY=${SECRET_KEY:-super_secret_hotel_key}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root_pass}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-hotel_db}
+      - MYSQL_USER=${MYSQL_USER:-hotel_user}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-hotel_pass}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+volumes:
+  mysql_data:

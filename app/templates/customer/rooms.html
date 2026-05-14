@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="rooms-wrapper fade-in">
+    <h2 class="text-center mb-4">Available Rooms</h2>
+
+    <div class="grid-layout">
+        {% for r in rooms %}
+        <div class="card glass-card room-card slide-up" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+            <div class="room-header">
+                <h3>Room {{ r.room_number }}</h3>
+                <span class="badge badge-{{ r.status }}">{{ r.status }}</span>
+            </div>
+            <div class="room-details mt-2">
+                <p><strong>Type:</strong> {{ r.type }}</p>
+                <p class="price-tag">${{ "%.2f"|format(r.price|float) }} <small>/ night</small></p>
+            </div>
+
+            {% if r.status == 'available' %}
+            <form method="POST" action="{{ url_for('main.book_room', room_id=r.id) }}" class="mt-4 check-form">
+                <div class="form-group border-top pt-4">
+                    <label>Check-in Date:</label>
+                    <input type="date" name="check_in" required class="date-input">
+                </div>
+                <div class="form-group border-bottom pb-4">
+                    <label>Check-out Date:</label>
+                    <input type="date" name="check_out" required class="date-input">
+                </div>
+                <button type="submit" class="btn btn-primary w-full shadow-hover mt-4">Book Now</button>
+            </form>
+            {% else %}
+            <button class="btn btn-secondary w-full mt-4" style="background:#e5e7eb; color:#9ca3af; cursor:not-allowed;"
+                disabled>Not Available</button>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="card glass-card w-full text-center slide-up" style="grid-column: 1 / -1;">
+            <p>No rooms matching criteria found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="admin-wrapper fade-in">
+    <div class="header-split mb-4">
+        <h2>My Dashboard</h2>
+        <a href="{{ url_for('main.rooms') }}" class="btn btn-primary shadow-hover">Book a Room</a>
+    </div>
+
+    <div class="card glass-card slide-up">
+        <h3>My Booking History</h3>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Room</th>
+                        <th>Type</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>#{{ b.id }}</td>
+                        <td>{{ b.room_number }}</td>
+                        <td>{{ b.type }}</td>
+                        <td>{{ b.check_in }}</td>
+                        <td>{{ b.check_out }}</td>
+                        <td>${{ "%.2f"|format(b.price|float) }}</td>
+                        <td><span class="badge badge-{{ b.status }}">{{ b.status }}</span></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">You have no bookings yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

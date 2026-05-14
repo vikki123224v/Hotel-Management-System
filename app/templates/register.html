@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card glass-card">
+        <h2>Register</h2>
+        <p class="subtitle">Join our Cloud Hotel system</p>
+        <form method="POST" action="{{ url_for('auth.register') }}" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-primary w-full shadow-hover">Create Account</button>
+        </form>
+        <p class="auth-redirect">Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a></p>
+    </div>
+</div>
+{% endblock %}

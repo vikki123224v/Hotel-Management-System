@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud-Based Hotel Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Load custom js for notifications -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('main.home') }}" class="nav-brand"
+            style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="CloudNest Logo"
+                style="height: 32px; border-radius: 4px;">
+            CloudNest
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('main.home') }}">Home</a>
+            {% if session.user_id %}
+            <span class="welcome-text">Welcome, {{ session.username }}!</span>
+            {% if session.role == 'admin' %}
+            <a href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a>
+            {% else %}
+            <a href="{{ url_for('main.dashboard') }}">My Bookings</a>
+            <a href="{{ url_for('main.rooms') }}">Book a Room</a>
+            {% endif %}
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-outline">Logout</a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flashes">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 CloudNest HMS. Deployed via Docker Containers.</p>
+    </footer>
+</body>
+
+</html>

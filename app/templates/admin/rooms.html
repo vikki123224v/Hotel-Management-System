@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="admin-wrapper fade-in">
+    <div class="header-split mb-4">
+        <h2>Manage Rooms</h2>
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline">Back to Dashboard</a>
+    </div>
+
+    <div class="card glass-card mb-4 slide-up">
+        <h3>Add New Room</h3>
+        <form method="POST" action="{{ url_for('admin.rooms') }}" class="form-inline mt-2">
+            <div class="form-group flex-1">
+                <input type="text" name="room_number" placeholder="Room Number (e.g. 101)" required>
+            </div>
+            <div class="form-group flex-1">
+                <select name="type" required>
+                    <option value="">Select Type...</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                </select>
+            </div>
+            <div class="form-group flex-1">
+                <input type="number" step="0.01" name="price" placeholder="Price / Night" required>
+            </div>
+            <button type="submit" class="btn btn-primary shadow-hover">Add Room</button>
+        </form>
+    </div>
+
+    <div class="card glass-card slide-up" style="animation-delay: 0.1s;">
+        <h3>Current Rooms</h3>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in rooms %}
+                    <tr>
+                        <td><strong>{{ r.room_number }}</strong></td>
+                        <td>{{ r.type }}</td>
+                        <td>${{ "%.2f"|format(r.price|float) }}</td>
+                        <td><span class="badge badge-{{ r.status }}">{{ r.status }}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                                <form method="POST" action="{{ url_for('admin.update_room_status', room_id=r.id) }}">
+                                    <select name="status" class="status-select" onchange="this.form.submit()">
+                                        <option value="available" {% if r.status=='available' %}selected{% endif %}>
+                                            Available</option>
+                                        <option value="booked" {% if r.status=='booked' %}selected{% endif %}>Booked
+                                        </option>
+                                        <option value="maintenance" {% if r.status=='maintenance' %}selected{% endif %}>
+                                            Maintenance</option>
+                                    </select>
+                                </form>
+                                <a href="{{ url_for('admin.edit_room', room_id=r.id) }}" class="btn btn-outline"
+                                    style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">✏️ Edit</a>
+                                <form method="POST" action="{{ url_for('admin.delete_room', room_id=r.id) }}"
+                                    onsubmit="return confirm('Are you sure you want to delete Room {{ r.room_number }}?');"
+                                    style="display:inline;">
+                                    <button type="submit" class="btn"
+                                        style="padding: 0.25rem 0.6rem; font-size: 0.8rem; background: #EF4444; color: white; border: none;">🗑️
+                                        Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No rooms registered.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

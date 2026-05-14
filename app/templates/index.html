@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-wrapper">
+    <img src="{{ url_for('static', filename='images/hero_hotel_image.png') }}" class="hero-bg"
+        alt="Luxury Hotel Interior">
+    <div class="hero-content glass-card fade-in"
+        style="background: rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.4); backdrop-filter: blur(8px);">
+        <h1 class="bounce">Welcome to CloudNest HMS</h1>
+        <p class="subtitle mt-2">Experience seamless scalability and real-time processing in a stunning, modern
+            environment.</p>
+        <div class="mt-4">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary pulse shadow-hover"
+                style="font-size: 1.1rem; padding: 0.75rem 1.5rem;">Get Started Now</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline ml-2"
+                style="font-size: 1.1rem; padding: 0.75rem 1.5rem; color: #fff; border-color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Member
+                Login</a>
+        </div>
+    </div>
+</div>
+
+<div class="header-split fade-in" style="margin-bottom: 1.5rem;">
+    <h2>System Architecture highlights</h2>
+    <p class="text-muted">Built for speed, reliability, and scale.</p>
+</div>
+
+<div class="features-grid mt-6">
+    <div class="card glass-card feature-card slide-up" style="animation-delay: 0.1s;">
+        <h3 style="color: var(--primary);">Dockerized Microservices</h3>
+        <p>Isolated application environment leveraging the power of microservices architecture patterns for enhanced
+            stability.</p>
+    </div>
+    <div class="card glass-card feature-card slide-up" style="animation-delay: 0.3s;">
+        <h3 style="color: var(--secondary);">Event-Driven Model</h3>
+        <p>Real-time booking events simulation using robust Pub/Sub mechanisms to allow fully detached asynchronous
+            processing.</p>
+    </div>
+    <div class="card glass-card feature-card slide-up" style="animation-delay: 0.5s;">
+        <h3 style="color: var(--warning);">Massive Scalability</h3>
+        <p>Designed with stateless REST API patterns and decoupled database management to scale horizontally with ease.
+        </p>
+    </div>
+</div>
+{% endblock %}
