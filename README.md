@@ -54,11 +54,25 @@ docker-compose up --build -d
 
 ---
 
-## 🛠️ Tech Stack
-- **Backend**: Python, Flask, Flask-MySQLdb
-- **Database**: MySQL 8.0
-- **Frontend**: HTML5, Vanilla CSS3 (Custom Design System), JS
-- **DevOps**: Docker, Docker Compose
+## 🛠️ Development & Database
+
+### 🐍 Local Development
+If you prefer to run Flask locally for faster development:
+```bash
+python run.py
+```
+*Make sure you have a `.env` file configured.*
+
+### 🗄️ Database Inspection (Docker)
+To enter the database shell and run SQL queries:
+```bash
+docker exec -it hotelmanagementsystm-db-1 mysql -uroot -proot_pass hotel_db
+```
+
+**Common SQL Queries:**
+- `SHOW TABLES;`
+- `SELECT * FROM users;`
+- `SELECT * FROM rooms;`
 
 ---
 © 2026 CloudNest. Built for the Modern Cloud.
